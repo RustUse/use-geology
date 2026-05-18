@@ -1,0 +1,21 @@
+[package]
+name = "use-stratum"
+description = "Primitive stratum vocabulary for RustUse"
+publish = true
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+rust-version.workspace = true
+documentation = "https://docs.rs/use-stratum"
+keywords = ["stratum", "geology", "layer", "earth", "rustuse"]
+categories = ["data-structures", "science"]
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+all-features = true

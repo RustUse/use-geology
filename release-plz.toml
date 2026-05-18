@@ -1,0 +1,93 @@
+[workspace]
+release = false
+release_always = false
+changelog_update = false
+pr_labels = ["release"]
+max_analyze_commits = 2000
+
+[[package]]
+name = "use-mineral"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-rock"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-stratum"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-formation"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-fault"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-tectonic-plate"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-geologic-time"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-fossil"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-geologic-process"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-sediment"
+release = true
+version_group = "rustuse-geology"
+
+[[package]]
+name = "use-geology"
+release = true
+version_group = "rustuse-geology"
+changelog_update = true
+changelog_path = "./CHANGELOG.md"
+changelog_include = [
+    "use-mineral",
+    "use-rock",
+    "use-stratum",
+    "use-formation",
+    "use-fault",
+    "use-tectonic-plate",
+    "use-geologic-time",
+    "use-fossil",
+    "use-geologic-process",
+    "use-sediment",
+]
+
+[changelog]
+header = """# Changelog
+
+## Unreleased
+"""
+protect_breaking_commits = true
+sort_commits = "oldest"
+commit_parsers = [
+  { message = "^feat(?:\\([^)]+\\))?!?: .+", group = "Added" },
+  { message = "^fix(?:\\([^)]+\\))?!?: .+", group = "Fixed" },
+  { message = "^security(?:\\([^)]+\\))?!?: .+", group = "Security" },
+  { message = "^(?:refactor|perf|change)(?:\\([^)]+\\))?!?: .+", group = "Changed" },
+  { message = "^docs(?:\\([^)]+\\))?!?: .+", group = "Documentation" },
+  { message = "^(?:build|ci|chore|deps|test)(?:\\([^)]+\\))?!?: .+", group = "Tooling" },
+  { footer = "^changelog: ?ignore$", skip = true },
+  { message = "^.*", group = "Changed" },
+]
