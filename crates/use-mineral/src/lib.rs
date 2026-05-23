@@ -91,6 +91,11 @@ impl Error for MohsHardnessError {}
 pub struct MineralName(String);
 
 impl MineralName {
+    /// Creates a mineral name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`MineralTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, MineralTextError> {
         non_empty_text(value).map(Self)
     }
@@ -130,6 +135,11 @@ impl FromStr for MineralName {
 pub struct MineralKind(String);
 
 impl MineralKind {
+    /// Creates a mineral kind from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`MineralTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, MineralTextError> {
         non_empty_text(value).map(Self)
     }
@@ -279,6 +289,12 @@ impl FromStr for CrystalSystem {
 pub struct MohsHardness(f64);
 
 impl MohsHardness {
+    /// Creates a Mohs hardness value in the inclusive range 1.0 through 10.0.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`MohsHardnessError::NonFinite`] when the value is not finite.
+    /// Returns [`MohsHardnessError::OutOfRange`] when the value is outside 1.0..=10.0.
     pub fn new(value: f64) -> Result<Self, MohsHardnessError> {
         if !value.is_finite() {
             return Err(MohsHardnessError::NonFinite);
@@ -292,7 +308,7 @@ impl MohsHardness {
     }
 
     #[must_use]
-    pub fn value(self) -> f64 {
+    pub const fn value(self) -> f64 {
         self.0
     }
 }
@@ -360,8 +376,8 @@ mod tests {
     fn valid_mohs_hardness() -> Result<(), MohsHardnessError> {
         let hardness = MohsHardness::new(7.0)?;
 
-        assert_eq!(hardness.value(), 7.0);
-        assert_eq!("8.5".parse::<MohsHardness>()?.value(), 8.5);
+        assert!((hardness.value() - 7.0).abs() < f64::EPSILON);
+        assert!(("8.5".parse::<MohsHardness>()?.value() - 8.5).abs() < f64::EPSILON);
         Ok(())
     }
 

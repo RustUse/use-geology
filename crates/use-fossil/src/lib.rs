@@ -97,6 +97,11 @@ impl Error for FossilOccurrenceError {}
 pub struct FossilName(String);
 
 impl FossilName {
+    /// Creates a fossil name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FossilTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FossilTextError> {
         non_empty_text(value).map(Self)
     }
@@ -234,6 +239,13 @@ pub struct FossilOccurrence {
 }
 
 impl FossilOccurrence {
+    /// Creates a fossil occurrence from at least one formation or time label.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FossilOccurrenceError::EmptyFormation`] when the formation is empty.
+    /// Returns [`FossilOccurrenceError::EmptyTimeLabel`] when the time label is empty.
+    /// Returns [`FossilOccurrenceError::MissingReference`] when both values are absent.
     pub fn new(
         formation: Option<String>,
         time_label: Option<String>,
@@ -266,7 +278,7 @@ impl fmt::Display for FossilOccurrence {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
         match (self.formation.as_deref(), self.time_label.as_deref()) {
             (Some(formation), Some(time_label)) => {
-                write!(formatter, "{} @ {}", formation, time_label)
+                write!(formatter, "{formation} @ {time_label}")
             },
             (Some(formation), None) => formatter.write_str(formation),
             (None, Some(time_label)) => formatter.write_str(time_label),

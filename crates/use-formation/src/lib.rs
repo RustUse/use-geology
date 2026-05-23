@@ -72,6 +72,11 @@ impl Error for FormationParseError {}
 pub struct FormationName(String);
 
 impl FormationName {
+    /// Creates a formation name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FormationTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FormationTextError> {
         non_empty_text(value).map(Self)
     }
@@ -153,6 +158,11 @@ impl FromStr for FormationKind {
 pub struct FormationMember(String);
 
 impl FormationMember {
+    /// Creates a formation member from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FormationTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FormationTextError> {
         non_empty_text(value).map(Self)
     }
@@ -187,6 +197,11 @@ impl FromStr for FormationMember {
 pub struct FormationGroup(String);
 
 impl FormationGroup {
+    /// Creates a formation group from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FormationTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FormationTextError> {
         non_empty_text(value).map(Self)
     }

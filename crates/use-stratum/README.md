@@ -1,6 +1,6 @@
 # use-stratum
 
-Small stratum and layer vocabulary primitives for RustUse.
+Small stratum and layer vocabulary primitives for `RustUse`.
 
 ## Example
 

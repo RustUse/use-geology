@@ -72,6 +72,11 @@ impl Error for PlateParseError {}
 pub struct TectonicPlateName(String);
 
 impl TectonicPlateName {
+    /// Creates a tectonic plate name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`PlateTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, PlateTextError> {
         non_empty_text(value).map(Self)
     }
@@ -188,6 +193,11 @@ impl FromStr for PlateBoundaryKind {
 pub struct PlateMotion(String);
 
 impl PlateMotion {
+    /// Creates a plate motion descriptor from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`PlateTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, PlateTextError> {
         non_empty_text(value).map(Self)
     }

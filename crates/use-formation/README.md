@@ -1,6 +1,6 @@
 # use-formation
 
-Small geologic formation vocabulary primitives for RustUse.
+Small geologic formation vocabulary primitives for `RustUse`.
 
 ## Example
 

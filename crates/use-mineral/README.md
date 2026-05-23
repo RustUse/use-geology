@@ -1,6 +1,6 @@
 # use-mineral
 
-Small mineral vocabulary primitives for RustUse.
+Small mineral vocabulary primitives for `RustUse`.
 
 ## Example
 

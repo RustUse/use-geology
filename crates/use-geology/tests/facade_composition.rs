@@ -29,7 +29,7 @@ fn facade_composes_workspace_topics() -> Result<(), Box<dyn std::error::Error>> 
     assert_eq!(quartz.as_str(), "Quartz");
     assert_eq!(mineral::MineralClass::Silicate.to_string(), "silicate");
     assert_eq!(mineral::CrystalSystem::Trigonal.to_string(), "trigonal");
-    assert_eq!(hardness.value(), 7.0);
+    assert!((hardness.value() - 7.0).abs() < f64::EPSILON);
 
     assert_eq!(basalt.as_str(), "Basalt");
     assert_eq!(rock::RockKind::Igneous.to_string(), "igneous");
@@ -39,7 +39,7 @@ fn facade_composes_workspace_topics() -> Result<(), Box<dyn std::error::Error>> 
     assert_eq!(layer.as_str(), "Brushy Basin");
     assert_eq!(stratum::StratumKind::Layer.to_string(), "layer");
     assert_eq!(stratum::StratumOrder::new(3).position(), 3);
-    assert_eq!(thickness.meters(), 12.5);
+    assert!((thickness.meters() - 12.5).abs() < f64::EPSILON);
 
     assert_eq!(formation_name.as_str(), "Morrison Formation");
     assert_eq!(formation::FormationKind::Formation.to_string(), "formation");
@@ -78,7 +78,7 @@ fn facade_composes_workspace_topics() -> Result<(), Box<dyn std::error::Error>> 
         "jurassic"
     );
     assert_eq!(epoch.as_str(), "Holocene");
-    assert_eq!(age.millions_of_years_before_present(), 145.0);
+    assert!((age.millions_of_years_before_present() - 145.0).abs() < f64::EPSILON);
 
     assert_eq!(fossil_name.as_str(), "Trilobite trace");
     assert_eq!(fossil::FossilKind::TraceFossil.to_string(), "trace-fossil");
@@ -97,7 +97,7 @@ fn facade_composes_workspace_topics() -> Result<(), Box<dyn std::error::Error>> 
 
     assert_eq!(sediment_name.as_str(), "Alluvial sand");
     assert_eq!(sediment::SedimentKind::Sand.to_string(), "sand");
-    assert_eq!(grain_size.millimeters(), 0.25);
+    assert!((grain_size.millimeters() - 0.25).abs() < f64::EPSILON);
     assert_eq!(sediment::Sorting::WellSorted.to_string(), "well-sorted");
     assert_eq!(sediment::Roundness::SubRounded.to_string(), "sub-rounded");
 

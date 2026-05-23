@@ -1,6 +1,6 @@
 # use-sediment
 
-Small sediment vocabulary primitives for RustUse.
+Small sediment vocabulary primitives for `RustUse`.
 
 ## Example
 

@@ -294,6 +294,11 @@ impl FromStr for GeologicPeriod {
 pub struct GeologicEpoch(String);
 
 impl GeologicEpoch {
+    /// Creates a geologic epoch label from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`GeologicTimeTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, GeologicTimeTextError> {
         non_empty_text(value).map(Self)
     }
@@ -328,6 +333,12 @@ impl FromStr for GeologicEpoch {
 pub struct GeologicAge(f64);
 
 impl GeologicAge {
+    /// Creates a non-negative geologic age in millions of years before present.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`GeologicAgeError::NonFinite`] when the value is not finite.
+    /// Returns [`GeologicAgeError::Negative`] when the value is negative.
     pub fn new(millions_of_years_before_present: f64) -> Result<Self, GeologicAgeError> {
         if !millions_of_years_before_present.is_finite() {
             return Err(GeologicAgeError::NonFinite);
@@ -341,7 +352,7 @@ impl GeologicAge {
     }
 
     #[must_use]
-    pub fn millions_of_years_before_present(self) -> f64 {
+    pub const fn millions_of_years_before_present(self) -> f64 {
         self.0
     }
 }
@@ -417,7 +428,7 @@ mod tests {
     fn valid_geologic_age() -> Result<(), GeologicAgeError> {
         let age = GeologicAge::new(145.0)?;
 
-        assert_eq!(age.millions_of_years_before_present(), 145.0);
+        assert!((age.millions_of_years_before_present() - 145.0).abs() < f64::EPSILON);
         Ok(())
     }
 

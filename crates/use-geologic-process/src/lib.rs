@@ -95,6 +95,11 @@ impl Error for ProcessRateError {}
 pub struct GeologicProcess(String);
 
 impl GeologicProcess {
+    /// Creates a geologic process name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ProcessTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, ProcessTextError> {
         non_empty_text(value).map(Self)
     }
@@ -191,6 +196,12 @@ pub struct ProcessRate {
 }
 
 impl ProcessRate {
+    /// Creates a process rate from a finite value and non-empty unit.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ProcessRateError::NonFiniteValue`] when the value is not finite.
+    /// Returns [`ProcessRateError::EmptyUnit`] when the trimmed unit is empty.
     pub fn new(value: f64, unit: impl AsRef<str>) -> Result<Self, ProcessRateError> {
         if !value.is_finite() {
             return Err(ProcessRateError::NonFiniteValue);
@@ -208,7 +219,7 @@ impl ProcessRate {
     }
 
     #[must_use]
-    pub fn value(&self) -> f64 {
+    pub const fn value(&self) -> f64 {
         self.value
     }
 
@@ -276,7 +287,7 @@ mod tests {
     fn process_rate_construction() -> Result<(), ProcessRateError> {
         let rate = ProcessRate::new(0.2, "mm/yr")?;
 
-        assert_eq!(rate.value(), 0.2);
+        assert!((rate.value() - 0.2).abs() < f64::EPSILON);
         assert_eq!(rate.unit(), "mm/yr");
         Ok(())
     }

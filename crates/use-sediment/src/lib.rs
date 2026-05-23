@@ -91,6 +91,11 @@ impl Error for GrainSizeError {}
 pub struct SedimentName(String);
 
 impl SedimentName {
+    /// Creates a sediment name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`SedimentTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, SedimentTextError> {
         non_empty_text(value).map(Self)
     }
@@ -181,6 +186,12 @@ impl FromStr for SedimentKind {
 pub struct GrainSize(f64);
 
 impl GrainSize {
+    /// Creates a non-negative grain size in millimeters.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`GrainSizeError::NonFinite`] when the value is not finite.
+    /// Returns [`GrainSizeError::Negative`] when the value is negative.
     pub fn new(millimeters: f64) -> Result<Self, GrainSizeError> {
         if !millimeters.is_finite() {
             return Err(GrainSizeError::NonFinite);
@@ -194,7 +205,7 @@ impl GrainSize {
     }
 
     #[must_use]
-    pub fn millimeters(self) -> f64 {
+    pub const fn millimeters(self) -> f64 {
         self.0
     }
 }
@@ -336,8 +347,8 @@ mod tests {
     fn valid_grain_size() -> Result<(), GrainSizeError> {
         let grain_size = GrainSize::new(0.0625)?;
 
-        assert_eq!(grain_size.millimeters(), 0.0625);
-        assert_eq!("2.0".parse::<GrainSize>()?.millimeters(), 2.0);
+        assert!((grain_size.millimeters() - 0.0625).abs() < f64::EPSILON);
+        assert!(("2.0".parse::<GrainSize>()?.millimeters() - 2.0).abs() < f64::EPSILON);
         Ok(())
     }
 

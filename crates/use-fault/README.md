@@ -1,6 +1,6 @@
 # use-fault
 
-Small geologic fault vocabulary primitives for RustUse.
+Small geologic fault vocabulary primitives for `RustUse`.
 
 ## Example
 

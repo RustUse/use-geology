@@ -1,6 +1,6 @@
 # use-tectonic-plate
 
-Small tectonic plate vocabulary primitives for RustUse.
+Small tectonic plate vocabulary primitives for `RustUse`.
 
 ## Example
 

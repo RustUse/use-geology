@@ -72,6 +72,11 @@ impl Error for FaultParseError {}
 pub struct FaultName(String);
 
 impl FaultName {
+    /// Creates a fault name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FaultTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FaultTextError> {
         non_empty_text(value).map(Self)
     }
@@ -156,6 +161,11 @@ impl FromStr for FaultKind {
 pub struct FaultMovement(String);
 
 impl FaultMovement {
+    /// Creates a fault movement descriptor from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FaultTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, FaultTextError> {
         non_empty_text(value).map(Self)
     }

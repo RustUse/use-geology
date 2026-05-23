@@ -1,6 +1,6 @@
 # use-geologic-process
 
-Small geologic process vocabulary primitives for RustUse.
+Small geologic process vocabulary primitives for `RustUse`.
 
 ## Example
 

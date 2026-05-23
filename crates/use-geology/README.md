@@ -1,6 +1,6 @@
 # use-geology
 
-Thin facade crate for the RustUse geology workspace.
+Thin facade crate for the `RustUse` geology workspace.
 
 `use-geology` reexports the focused geology crates under topic modules so application code can use
 one dependency while the underlying implementation stays split across the smaller crates.

@@ -106,6 +106,11 @@ impl Error for StratumThicknessError {}
 pub struct StratumName(String);
 
 impl StratumName {
+    /// Creates a stratum name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`StratumTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, StratumTextError> {
         non_empty_text(value).map(Self)
     }
@@ -223,6 +228,12 @@ impl FromStr for StratumOrder {
 pub struct StratumThickness(f64);
 
 impl StratumThickness {
+    /// Creates a non-negative stratum thickness in meters.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`StratumThicknessError::NonFinite`] when the value is not finite.
+    /// Returns [`StratumThicknessError::Negative`] when the value is negative.
     pub fn new(meters: f64) -> Result<Self, StratumThicknessError> {
         if !meters.is_finite() {
             return Err(StratumThicknessError::NonFinite);
@@ -236,7 +247,7 @@ impl StratumThickness {
     }
 
     #[must_use]
-    pub fn meters(self) -> f64 {
+    pub const fn meters(self) -> f64 {
         self.0
     }
 }
@@ -298,7 +309,7 @@ mod tests {
     fn valid_stratum_thickness() -> Result<(), StratumThicknessError> {
         let thickness = StratumThickness::new(12.5)?;
 
-        assert_eq!(thickness.meters(), 12.5);
+        assert!((thickness.meters() - 12.5).abs() < f64::EPSILON);
         Ok(())
     }
 

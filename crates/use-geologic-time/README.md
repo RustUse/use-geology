@@ -1,6 +1,6 @@
 # use-geologic-time
 
-Small geologic time vocabulary primitives for RustUse.
+Small geologic time vocabulary primitives for `RustUse`.
 
 ## Example
 

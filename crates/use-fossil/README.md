@@ -1,6 +1,6 @@
 # use-fossil
 
-Small fossil vocabulary primitives for RustUse.
+Small fossil vocabulary primitives for `RustUse`.
 
 ## Example
 

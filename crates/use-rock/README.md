@@ -1,6 +1,6 @@
 # use-rock
 
-Small rock vocabulary primitives for RustUse.
+Small rock vocabulary primitives for `RustUse`.
 
 ## Example
 

@@ -95,6 +95,11 @@ impl Error for RockCompositionError {}
 pub struct RockName(String);
 
 impl RockName {
+    /// Creates a rock name from non-empty text.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RockTextError::Empty`] when the trimmed value is empty.
     pub fn new(value: impl AsRef<str>) -> Result<Self, RockTextError> {
         non_empty_text(value).map(Self)
     }
@@ -232,6 +237,11 @@ pub struct RockComposition {
 }
 
 impl RockComposition {
+    /// Creates a rock composition with a non-empty label and no mineral names.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RockTextError::Empty`] when the trimmed label is empty.
     pub fn with_label(label: impl AsRef<str>) -> Result<Self, RockTextError> {
         Ok(Self {
             label: Some(non_empty_text(label)?),
@@ -239,6 +249,12 @@ impl RockComposition {
         })
     }
 
+    /// Creates a rock composition from at least one non-empty mineral name.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RockCompositionError::EmptyMineralName`] when any mineral name is empty.
+    /// Returns [`RockCompositionError::NoMineralNames`] when no mineral names are supplied.
     pub fn with_mineral_names<I, S>(mineral_names: I) -> Result<Self, RockCompositionError>
     where
         I: IntoIterator<Item = S>,
@@ -252,6 +268,13 @@ impl RockComposition {
         })
     }
 
+    /// Creates a labeled rock composition from a non-empty label and mineral list.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RockCompositionError::EmptyLabel`] when the label is empty.
+    /// Returns [`RockCompositionError::EmptyMineralName`] when any mineral name is empty.
+    /// Returns [`RockCompositionError::NoMineralNames`] when no mineral names are supplied.
     pub fn describe<I, S>(
         label: impl AsRef<str>,
         mineral_names: I,
@@ -287,7 +310,8 @@ impl fmt::Display for RockComposition {
         match (self.label.as_deref(), self.mineral_names.is_empty()) {
             (Some(label), true) => formatter.write_str(label),
             (Some(label), false) => {
-                write!(formatter, "{} [{}]", label, self.mineral_names.join(", "))
+                let mineral_names = self.mineral_names.join(", ");
+                write!(formatter, "{label} [{mineral_names}]")
             },
             (None, false) => formatter.write_str(&self.mineral_names.join(", ")),
             (None, true) => formatter.write_str("unspecified"),
