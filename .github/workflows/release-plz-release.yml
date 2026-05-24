@@ -30,7 +30,7 @@ jobs:
               use-mineral use-rock use-stratum use-formation use-fault use-tectonic-plate use-geologic-time use-fossil use-geologic-process use-sediment use-geology
         steps:
             - name: Check out repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
               with:
                   fetch-depth: 0
                   persist-credentials: false

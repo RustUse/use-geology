@@ -21,7 +21,7 @@ jobs:
         use-mineral use-rock use-stratum use-formation use-fault use-tectonic-plate use-geologic-time use-fossil use-geologic-process use-sediment
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install stable Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
